@@ -4,4 +4,5 @@ slides/
 old-content/
 handouts/
 *.code-workspace
+demo/build/
 
