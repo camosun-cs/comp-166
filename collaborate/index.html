@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Accessing Collaborate in Chrome</title>
+	<meta charset="utf-8" />
+	<style>
+		:root {
+			font-family: Helvetica, sans-serif;
+			font-size: 16pt;
+		}
+		@keyframes progress-rotate {
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
+		}
+		.progress {
+			background-color: #262626;
+			height: 4.5rem;
+			padding: .5rem;
+			box-sizing: border-box;
+			text-align: center;
+		}
+		.progress-svg {
+			animation: 4s linear infinite progress-rotate;
+			height: 100%;
+		}
+		img {
+			box-shadow: 1px 3px 6px rgba(0,0,0,.5);
+		}
+	</style>
+</head>
+<body>
+<h1>Fixing the never-ending spinner in Collaborate</h1>
+<p>If you're using Chrome, you might get stuck with this when trying to login to Collaborate:</p>
+<div class="progress">
+	<svg class="progress-svg" viewBox="-10 -10 220 220" role="presentation" aria-valuetext="Loading" focusable="false">
+	    <path d="m100,0a100,100 0 0 1 0,200a100,100 0 0 1 0,-200" fill="transparent" stroke-dasharray="45" stroke-width="16" stroke-linecap="round" stroke="#c56fd5"></path>
+	</svg>
+</div>
+<p>The issue is most likely due to a cookie being blocked, and is easy to fix!</p>
+<ol>
+	<li>
+		<p>Click the lock icon on the left side of the address bar.</p>
+		<img src="lock-lo.png" srcset="lock-hi.png 2x" alt="screenshot of address bar, with arrow pointing to lock icon "/>
+	</li>
+	<li>
+		<p>Choose "<samp>Cookies</samp>" from the drop-down menu.</p>
+		<img src="cookies-lo.png" srcset="cookies-hi.png 2x" alt="screenshot of security popup, with arrow pointing to Cookies menu item"/>
+	</li>
+	<li>
+		<p>A dialog window will open showing the allowed cookies. Switch to the "<samp>Blocked</samp>" tab.</p>
+		<img src="dialog-lo.png" srcset="dialog-hi.png 2x" alt="screenshot of Cookies dialog, with arrow pointing to Blocked tab"/>
+	</li>
+	<li>
+		<p>Select "<samp>ca-lti.bbcollab.com</samp>" from the list and click the "<samp>Allow</samp>" button in the bottom left.</p>
+		<img src="allow-lo.png" srcset="allow-hi.png 2x" alt="screenshot of Cookies dialog with arrows pointing to (1) blocked cookie and (2) Allow button"/>
+	</li>
+	<li>
+		<p>A confirmation should appear at the bottom near the <samp>Allow</samp> button. Click "<samp>Done</samp>" to close the dialog.</p>
+		<img src="done-lo.png" srcset="done-hi.png 2x" alt="screenshot of Cookies dialog showing changed settings for ca-lti.bbcollab.com cookie, and arrow pointing to Done button"/>
+	</li>
+	<li>
+		<p>Reload the page to allow the settings to take effect.</p>
+		<img src="reload-lo.png" srcset="reload-hi.png 2x" alt="screenshot of browser reload notification, with arrow pointing to Reload button"/>
+	</li>
+</ol>
+
+</body>
+</html>
