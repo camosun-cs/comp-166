@@ -1,0 +1,647 @@
+@charset "utf-8";
+// colors
+$black: #444;
+$title: #000080;
+$alert: rgb(251, 227, 220);
+$code: rgba(0, 0, 0, 0.05);
+$info: #eef;
+$link: #0080ff;
+
+// dimensions
+$em: 16;
+$initialMagic: 1.5em;
+$magic: 1.5rem;
+$content: 24;
+$mediumFontFactor: 1.125;
+$largeFontFactor: 1.25;
+
+// breakpoints
+$breakpoints: (
+	// can lossen things up a bit and start floats
+	'medium': ( min-width: $content * $mediumFontFactor * $initialMagic ),
+	// room to move asides out of the main column
+	'large': ( min-width: ((1.5 * $content + 5) * $largeFontFactor) * $initialMagic )
+);
+
+
+////////////////////////////////////////////////////////////////////////////////
+//                          FUNCTIONS AND MIXINS
+////////////////////////////////////////////////////////////////////////////////
+
+// respond to named breakpoints
+@mixin respond-to($pt) {
+	@if map-has-key($breakpoints, $pt) {
+		@media #{inspect(map-get($breakpoints, $pt))} {
+			@content;
+		}
+	}
+	@else { @warn "unknown breakpoint `#{$pt}`" }
+}
+
+// get resulting apparent color from alpha-blending $color1 over $color2
+@function blend($color1, $color2) {
+	$a1: alpha($color1);
+	$a2: alpha($color2);
+	$c1: (red($color1)*$a1, green($color1)*$a1, blue($color1)*$a1, $a1);
+	$c2: (red($color2)*$a2, green($color2)*$a2, blue($color2)*$a2, $a2);
+	$result: ();
+	@for $i from 1 through 4 {
+		$result: append($result, nth($c1,$i) + (nth($c2,$i) * (1 - $a1)), comma);
+	}
+	@return rgba($result...);
+}
+
+// keep descendant floats' bottom margins within bottom padding
+@mixin containFloats {
+	&::after {
+		content: " ";
+		display: block;
+		clear: both;
+		height: 0;
+	}
+}
+
+// fixed-width font-face
+@mixin monospace {
+	font-size: .8em;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+// extend background color without affecting positioning
+// note: uses box-shadow to do this in way that's probably not compatible
+// with other box-shadow uses...
+@mixin bg-bleed($color, $bothSides: true) {
+	@if alpha($color) != 1 {
+		@warn "bg-bleed only works properly with fully opaque colours (got `#{$color}`)";
+	}
+	background-color: $color;
+	$left: (-$magic/2 0 0 $magic/2 $color);
+	$right: ($magic/2 0 0 $magic/2 $color);
+	@if $bothSides {
+		box-shadow: ($left, $right);
+	} @else {
+		box-shadow: $left;
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//                          BASIC RESET AND RHYTHM
+////////////////////////////////////////////////////////////////////////////////
+
+// reset
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	line-height: $magic;
+	vertical-align: top; // prevent line widening with some font-faces
+}
+
+// base font
+html {
+	font-family: serif;
+	font-size: #{16/$em}rem;
+	line-height: 1.5;
+	color: $black;
+	@include respond-to(medium) {
+		font-size: #{$mediumFontFactor}rem;
+	}
+	@include respond-to(large) {
+		font-size: #{$largeFontFactor}rem;
+	}
+}
+
+// basic margins we actually want
+h1, h2, h3, h4, h5, h6, hgroup,
+ul, ol, .instructions > li, dl,
+p, figure, aside, details, pre {
+	margin-top: $magic;
+	margin-bottom: $magic;
+}
+ul, ol {
+	padding-left: $magic;
+}
+li > ul, li > ol {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+dd {
+	margin-left: $magic;
+}
+
+// text styles
+a {
+	color: $link;
+	text-decoration: none;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-weight: lighter;
+	font-family: sans-serif;
+	clear: both;
+	margin-top: 1.5*$magic;
+}
+h1 {
+	font-weight: normal;
+	font-size: #{32/$em}rem;
+	line-height: 2*$magic;
+}
+h2 {
+	font-size: #{24/$em}rem;
+}
+h3 {
+	font-size: #{18/$em}rem;
+}
+samp, kbd, tt {
+	@include monospace;
+	vertical-align: baseline;
+}
+abbr {
+	text-decoration: none;
+}
+abbr[title]::after {
+	content: " ("attr(title)")";
+	opacity: .5;
+}
+dt {
+	font-weight: bold;
+}
+sup {
+	// don't use vertical-align, since it messes up line heights
+	position: relative;
+	font-size: .6em;
+	top: -.3em;
+	& > & {
+		font-size: inherit;
+	}
+}
+sub {
+	@extend sup;
+	top: .35em;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//                                MAIN LAYOUT
+////////////////////////////////////////////////////////////////////////////////
+
+header, section {
+	display: block;
+	max-width: 24 * $magic;
+	padding: 0 $magic;
+	margin: auto;
+	margin-bottom: 2 * $magic;
+	box-sizing: border-box;
+	@include containFloats;
+	@include respond-to(large) {
+		// center using the body instead
+		margin-left: 0;
+		margin-right: 0;
+		@at-root {
+			body {
+				max-width: (1.5 * $content + 3) * $magic;
+				margin: auto;
+			}
+		}
+	}
+}
+
+section {
+	margin-top: -1px;
+	border-top: 1px solid;
+	border-color: inherit;
+	clear: both;
+}
+
+.instructions {
+	// padding-left: 0;
+	& > li > ul {
+		list-style: disc;
+	}
+	& > li > ul,
+	& > li > ol {
+		margin-top: $magic;
+		margin-bottom: $magic;
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//                                  COMPONENTS
+////////////////////////////////////////////////////////////////////////////////
+
+table {
+	border-collapse: collapse;
+	border: 2px solid;
+	border-color: inherit;
+	display: table; // block level
+	// note: table margins don't collapse
+	margin: $magic auto;
+	&.inline {
+		display: inline-table;
+		margin: $magic/2;
+	}
+}
+td, th {
+	border: 1px solid;
+	border-color: inherit;
+	padding: 2px $magic/2;
+	text-align: left;
+}
+th {
+	background-color: $info;
+}
+thead th {
+	background-color: darken($info, 8%);
+	text-align: center;
+}
+
+// assessment table
+.marks {
+	width: 100%;
+	table-layout: fixed;
+
+	th {
+		text-align: left;
+	}
+	td {
+		padding-left: $magic;
+	}
+	// marks column
+	td:last-child,
+	thead th:last-child,
+	tfoot td:last-child  {
+		width: 3em;
+		padding-left: $magic/2;
+		text-align: center;
+	}
+	// total row
+	tfoot td:last-child {
+		background-color: darken($info, 8%);
+		font-weight: bold;
+	}
+}
+
+// inline definition lists
+dl.inline dt {
+	float: left;
+	margin-right: $magic/2;
+	clear: left;
+	&::after {
+		content: ":";
+	}
+}
+
+//~~~~~~~~~~~~~
+//  call-outs
+//~~~~~~~~~~~~~
+
+aside {
+	background-color: $alert;
+	@include bg-bleed($alert);
+	@include respond-to(medium) {
+		box-sizing: border-box;
+		float: right;
+		//needed to avoid collisions with right-aligned images
+		clear: right;
+		margin: $magic/2 0 $magic*3/2 $magic*3/2;
+		max-width: 50%;
+		filter: drop-shadow(0 1px 3px rgba(0,0,0,.3));
+
+		// don't float when inside a details
+		details & {
+			float: none;
+			margin: $magic;
+			max-width: initial;
+			filter: none;
+		}
+	}
+	@include respond-to(large) {
+		&:not(.dont-pull) {
+			position: absolute;
+			max-width: ($content/2) * $magic;
+			margin: 0;
+			margin-left: ($content + 1) * $magic;
+			filter: drop-shadow(0 1px 3px rgba(0,0,0,.3));
+		}
+	}
+}
+
+//~~~~~~~~~~~~~~~~~~~
+//  further reading
+//~~~~~~~~~~~~~~~~~~~
+
+details {
+	background-color: $info;
+	display: block;
+	clear: both;
+
+	@include bg-bleed($info);
+	@include containFloats;
+
+	& + details {
+		// add a 1px space between to show that there is more than one!
+		margin-top: calc($magic + 1px);
+	}
+
+	&:not([open]) > *:not(summary) {
+		display: none;
+	}
+	// (.instructions > li > ul) defined earlier, but doesn't really conflict
+	// stylelint-disable-next-line no-descending-specificity
+	ul {
+		list-style: disc;
+	}
+
+	// extend bg-bleed to left edge when inside .instructions
+	.instructions & {
+		box-shadow:
+			-$magic*1.5 0 0 $magic/2 $info,
+			$magic/2 0 0 $magic/2 $info;
+	}
+
+	// leave one line gap after code samples
+	// reordering this would require breaking up the combo selector :(
+	// stylelint-disable-next-line no-descending-specificity
+	pre + &,
+	.code-toolbar + &,
+	pre + [id^='reorder-placeholder-'] + &,
+	.code-toolbar + [id^='reorder-placeholder-'] + & {
+		margin-top: 2.5rem;
+	}
+}
+
+summary {
+	cursor: pointer;
+	position: relative;
+	// fill bg-bleed area of details
+	display: inline-block; // don't collapse margins
+	width: 100%;
+	margin: (-$magic/2) (-$magic);
+	padding: $magic/2 $magic;
+
+	// remove webkit's non-spec implementation
+	&::-webkit-details-marker {
+		display: none;
+	}
+	&:focus {
+		outline: none;
+		&::after {
+			content: "●";
+			float: right;
+			color: #aad;
+		}
+	}
+	&:hover {
+		background: rgba(255,255,255,.5);
+		.instructions & {
+			box-shadow: -$magic 0 0 rgba(255,255,255,.5);
+		}
+	}
+
+	// need to manually create disclosure icon, since this isn't a list-item
+	&::before {
+		content: "▶";
+		position: absolute;
+		left: 0;
+		width: $magic;
+		font-family: monospace;
+		text-align: center;
+		details[open] > & {
+			transform: rotate(90deg);
+		}
+	}
+
+	// modernizr gets confused by our negative margins :)
+	#modernizr & {
+		margin: 0;
+	}
+}
+
+//~~~~~~~~~~~
+//  figures
+//~~~~~~~~~~~
+
+figure {
+	text-align: center;
+	margin-left: -$magic;
+	margin-right: -$magic;
+	img {
+		display: block;
+		margin: auto;
+		max-width: 100%;
+	}
+	@include respond-to(medium) {
+		&.right {
+			max-width: 50%;
+			float: right;
+			// margin: 0 -$magic $magic $magic;
+			margin-top: 0;
+			margin-left: $magic;
+		}
+	}
+}
+.instructions figure {
+	margin-right: 0;
+}
+
+//~~~~~~~~~~~~~
+//  Bonus tag
+//~~~~~~~~~~~~~
+// use like:
+// <span class="bonus">bonus</span>
+.bonus {
+	font-size: 0.8em;
+	padding: 0.1em 0.4em;
+	border-radius: 0.5em;
+	background-color: #eef;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
+	border: 1px solid #ccf;
+	text-transform: uppercase;
+}
+
+//~~~~~~~~~~~~~~~
+//  UML Diagrams
+//~~~~~~~~~~~~~~~~
+// use like:
+// <figure class="uml">
+//   <figcaption>MyClass <small class="uml-extends">extends ParentClass</small></figcaption>
+//   <ul>
+//     <li>- <u>privateStaticVar: int</u></li>
+//   </ul>
+//   <hr class="uml-divide" />
+//   <ul>
+//     <li>+ MyClass()</li>
+//   </ul>
+//   <hr class="uml-divide" />
+//   <ul>
+//     <li>+ method(param: String): int</li>
+//   </ul>
+// </figure>
+
+.uml {
+	display: table; // shrink-wrap
+	border: 1px solid black;
+	text-align: left;
+	margin-left: 0;
+	margin-right: 0;
+
+	& > figcaption {
+		text-align: center;
+		font-weight: bold;
+		border-bottom: 1px solid black;
+	}
+	& > ul {
+		list-style: none;
+		margin: 0.75rem;
+		padding: 0;
+	}
+}
+
+.uml-extends {
+	font-weight: normal;
+	font-size: smaller;
+}
+
+.uml-divide {
+	margin: 0.75rem 0;
+	border: 0;
+	border-top: 1px solid black;
+}
+
+.uml.inline {
+	display: inline-block;
+}
+
+//~~~~~~~~~~~~~~~~
+//  code samples
+//~~~~~~~~~~~~~~~~
+
+code,
+code[class*="language-"],
+:not(pre) > code[class*="language-"] { // extra spec needed to override Prism
+	@include monospace;
+	background: $code;
+	padding: 2px .4em;
+	border-radius: .3rem;
+	text-shadow: 0 1px white;
+	line-height: $magic;
+}
+
+pre,
+pre[class*="language-"] {
+	$bgColor: blend($code, white);
+	@include monospace;
+	@include bg-bleed($bgColor, $bothSides: false);
+	margin-right: -$magic;
+	clear: both;
+	// add scroll-fades at edges
+	position: relative;
+	&::before,
+	&::after {
+		content: "";
+		position: absolute;
+		width: $magic;
+		height: 100%;
+		top: 0;
+	}
+	&::before {
+		left: -$magic;
+		background: linear-gradient(to right, $bgColor, transparentize($bgColor, 1));
+	}
+	&::after {
+		right: 0;
+		background: linear-gradient(to left, $bgColor, transparentize($bgColor, 1));
+	}
+	details & {
+		$bgColor: blend($code, $info);
+		@include bg-bleed($bgColor, $bothSides: false);
+		&::before {
+			background: linear-gradient(to right, $bgColor, transparentize($bgColor, 1));
+		}
+		&::after {
+			background: linear-gradient(to left, $bgColor, transparentize($bgColor, 1));
+		}
+	}
+	& > code,
+	& > code[class*="language-"] {
+		border-radius: 0;
+		background: transparent;
+		overflow: auto;
+		// cover full bg-bleed area of pre so scrolling looks normal
+		display: inline-block; // don't collapse margins
+		width: calc(100% - #{$magic});
+		margin: (-$magic/2) (-$magic);
+		padding: $magic/2 $magic;
+	}
+	// override prism
+	line-height: $magic;
+	overflow: visible;
+	padding: 0;
+	margin-top: $magic; // ensure box-shadow doesn't bleed over previous content
+	margin-bottom: 0;
+}
+
+details pre {
+	margin-right: 0;
+}
+
+// reordering this would require breaking up the combo selector above :(
+// stylelint-disable-next-line no-descending-specificity
+details + pre,
+details + .code-toolbar,
+details + [id^='reorder-placeholder-'] + pre,
+details + [id^='reorder-placeholder-'] + .code-toolbar {
+	margin-top: 2.5rem;
+}
+
+.toolbar {
+	display: flex;
+	justify-content: flex-end;
+	font-size: smaller;
+}
+.toolbar-item {
+	margin: 0 $magic/2;
+	background: $code;
+	border-radius: 0.3rem;
+}
+// stylelint thinks this potentially overlaps with
+//   "details:not([open]) > *:not(summary)" which is defined earlier,
+//   but details are never .toolbar-item's
+// stylelint-disable-next-line no-descending-specificity
+.toolbar-item > * {
+	display: block;
+	padding: 0 $magic/2;
+	position: relative; // float above scroll bars
+}
+
+//~~~~~~~~~~~~~~~~~~~~~
+//  api documentation
+//~~~~~~~~~~~~~~~~~~~~~
+.api-frame {
+	box-sizing: border-box;
+	width: 100%;
+	height: 30em;
+	max-height: 90vh;
+	border: inset;
+}
+
+.api-linkbar {
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.api-popout, .api-download {
+	padding: 0 0.5em;
+	border-bottom-right-radius: 0.5em;
+	border-bottom-left-radius: 0.5em;
+	font-size: smaller;
+	background: rgba(0, 0, 0, 0.05);
+}
+
+.icon {
+	width: 0.8em;
+	height: 0.8em;
+	vertical-align: baseline;
+}
