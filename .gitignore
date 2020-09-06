@@ -5,4 +5,5 @@ old-content/
 handouts/
 *.code-workspace
 demo/build/
+_site/
 
