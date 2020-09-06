@@ -6,6 +6,22 @@
 	<meta name="viewport" content="width=device-width"/>
 	<base href="https://camosun-cs.github.io/comp-166/labs/setup/" target="_blank"/>
 	<link rel="stylesheet" href="../template/bundle.css"/>
+	<style>
+		.toolbar-icon {
+			height: 1.5rem; /* $magic */
+		}
+		.error-underline {
+			background: url(underline.gif) repeat-x bottom;
+		}
+		.warn-underline {
+			background: url(underline-warn.gif) repeat-x bottom;
+		}
+		ins, .changed {
+			text-decoration: none;
+			background-color: rgba(209, 255, 0, 0.67);
+			padding: .5em;
+		}
+	</style>
 </head>
 <body>
 	<header>
@@ -41,13 +57,19 @@
 				<p>If you are on a Mac:</p>
 				<ol>
 					<li>Open the downloaded ZIP file to unpack it.</li>
-					<li>Move the <samp>Visual Studio Code</samp> program to your <samp>Applications</samp> folder.</li>
+					<li>Move the Visual Studio Code program to your <samp>Applications</samp> folder.</li>
 				</ol>
 			</li>
-			<li>Open Visual Studio Code</li>
-			<li>Open the Extensions panel by clicking on the <img src="extensions.png" alt="extensions" style="height:1.5em"/> icon in the left-hand toolbar, or choosing <samp>View &gt; Extensions</samp> from the main menu.</li>
-			<li>Install the <samp>C/C++</samp> extension from Microsoft.</li>
-			<li>Install the <samp>Live Share</samp> extension from Microsoft.</li>
+			<li>Launch Visual Studio Code.</li>
+			<li>Open the Extensions panel by clicking on the <img src="extensions-lo.png" srcset="extensions-hi.png 2x" alt="extensions" class="toolbar-icon"/> icon in the left-hand toolbar, or choosing <kbd><samp>View</samp> > <samp>Extensions</samp></kbd> from the main menu.</li>
+			<li>
+				<p>Install the <samp>C/C++</samp> extension from Microsoft.</p>
+				<img src="c-ext-lo.png" srcset="c-ext-hi.png 2x" alt="screenshot of C/C++ extension banner, with arrow pointing to install button"/>
+			</li>
+			<li>
+				<p>Install the <samp>Live Share</samp> extension from Microsoft.</p>
+				<img src="liveshare-ext-lo.png" srcset="liveshare-ext-hi.png 2x" alt="screenshot of Live Share extension banner, with arrow pointing to install button"/>
+			</li>
 			<li>
 				<p>Install compilation tools for your system.</p>
 				<details>
@@ -61,9 +83,9 @@
 				<details>
 					<summary>If you are using MacOS:</summary>
 					<ol>
-						<li>Open a terminal panel by choosing <samp>Terminal &gt; New Terminal</samp> from the main menu, or pressing <kbd>ctrl+`</kbd></li>
+						<li>Open a terminal panel by choosing <kbd><samp>Terminal</samp> > <samp>New Terminal</samp></kbd> from the main menu, or pressing <kbd><kbd>ctrl</kbd><span>+</span><kbd>`</kbd></kbd></li>
 						<li>
-							<p>Type <kbd>xcode-select --install</kbd> and press enter.</p>
+							<p>Type <code class="language-shell">xcode-select --install</code> and press <kbd><kbd>enter</kbd></kbd>.</p>
 							<p>If you've already done some programming on your system before, you may see an error message. That's fine, it means you already have the tools and are ready to go!</p>
 						</li>
 						<li>
@@ -74,9 +96,9 @@
 					</ol>
 				</details>
 			</li>
-			<li>Back in VSCode, bring your focus back to the terminal panel by clicking anywhere inside it or pressing <kbd>ctrl+`</kbd></li>
+			<li>Back in <abbr title="Visual Studio Code">VSCode</abbr>, bring your focus back to the terminal panel by clicking anywhere inside it or pressing <kbd><kbd>ctrl</kbd><span>+</span><kbd>`</kbd></kbd> (the <kbd><kbd>`</kbd></kbd> key is usually found to the left of the <kbd><kbd>1</kbd></kbd> key).</li>
 			<li>
-				<p>Type <kbd>gcc</kbd> and press enter.</p>
+				<p>Type <code class="language-shell">gcc</code> and press <kbd><kbd>enter</kbd></kbd>.</p>
 				<p>If you see a "<samp>command not found</samp>" error, ask for help!</p>
 				<p>If you see "<samp>error: no input files</samp>", everything is working correctly!</p>
 			</li>
@@ -88,14 +110,16 @@
 		<ol class="instructions">
 			<li>Create a <samp>comp-166</samp> folder somewhere you'll be able to find it later.</li>
 			<li>
-				<p>Download the <samp>hello_world.c</samp> source code below, and move it into your comp-166 folder.</p>
+				<p>Download the <samp>hello_world.c</samp> source code below, and move it into this folder.</p>
 				<a class="sample language-clike" href="hello_world.c" download>Download hello_world.c</a>
 				<p>Don't worry about understanding all of this code for now; we'll be learning about each piece later!</p>
 			</li>
-			<li>Open the folder in VSCode, and use the Explorer pane to open hello_world.c</li>
+			<li>Open your folder in VSCode (<kdb><samp>File</samp> > <samp>Open…</samp></kdb>)</li>
+			<li>Open the Explorer panel by clicking on the <img src="explorer-lo.png" srcset="explorer-hi.png 2x" alt="Explorer" class="toolbar-icon"/> icon in the left-hand toolbar, or choosing <kbd><samp>View</samp> > <samp>Explorer</samp></kbd> from the main menu.</li>
+			<li>Open <samp>hello_world.c</samp> in an editor tab by clicking on its name in the Explorer panel.</li>
 			<li>Admire the pretty syntax coloring! If it's not working for you, check that you've finished everything in Task 1 or ask for help.</li>
 			<li>
-				<p>The red squiggly underlines in our code (and red text in the Explorer pane) are indicating that this source file has an error. We cannot compile or run our code until all errors are fixed (yellow underlines will appear for <em>warnings</em> that indicate potential problems but won't prevent your code from compiling and running). Hover your mouse over the underlined code or open the Problems panel (<samp>View &gt; Problems</samp> in the main menu) to find out what's wrong.</p>
+				<p>The <span class="error-underline">red squiggly underlines</span> in our code (and red text in the Explorer pane) are indicating that this source file has an error. We cannot compile or run our code until all errors are fixed (<span class="warn-underline">yellow underlines</span> will appear for <em>warnings</em> that indicate potential problems but won't prevent your code from compiling and running). Hover your mouse over the underlined code or open the Problems panel (<samp>View &gt; Problems</samp> in the main menu) to find out what's wrong.</p>
 				<details>
 					<summary>What does this error mean!?</summary>
 					<p>The error messages you get from the compiler can be quite cryptic, especially when you're just starting to program. They tend to be fairly short and use a lot of specialized jargon.</p>
@@ -116,13 +140,12 @@
 				</details>
 			</li>
 			<li>Fix the error by removing the line that says <samp>"Oops!"</samp> (line 4), and save your changes.</li>
-			<li>Open the terminal panel (<kbd>ctrl-`</kbd>).</li>
 			<li>
-				<p>Type <kbd>gcc hello_world.c</kbd> and press enter</p>
+				<p>Open the terminal panel (<kbd><kbd>ctrl</kbd><span>+</span><kbd>`</kbd></kbd>), type <code class="language-shell">gcc hello_world.c</code>, and press <kbd><kbd>enter</kbd></kbd></p>
 				<p>If all went well, there should be no errors or warnings reported, and a new <samp>a.out</samp> file will appear in the Explorer panel. If not, ask for help!</p>
 			</li>
 			<li>
-				<p>Type <kbd>./a.out</kbd> in the terminal and press enter.</p>
+				<p>Type <code class="language-shell">./a.out</code> in the terminal and press <kbd><kbd>enter</kbd></kbd>.</p>
 				<p>You should see the words "<samp>Hello world!</samp>" appear just below your command. Congratulations, you've just compiled and run your first C program!</p>
 			</li>
 			<li>
@@ -139,18 +162,18 @@
 
 	<section id="task3">
 		<h2>Task 3: Keeping it Organized</h2>
-		<p>That <samp>comp-166</samp> is going to get messy quickly if we just dump everything in there for every lab. Let's make some sub-folders to keep it organized, and setup VSCode to do some of the grunt work for us.</p>
+		<p>That <samp>comp-166</samp> folder is going to get messy quickly if we just dump everything in there for every lab. Let's make some sub-folders to keep it organized, and setup VSCode to do some of the grunt work for us.</p>
 		<ol class="instructions">
 			<li>Create a folder inside of comp-166 named like <samp>LastnameFirstname_lab0</samp> and move your source code into it.</li>
-			<li>Optionally, create additional folders for future labs 1–6.</li>
+			<li>Optionally, create additional folders for future labs 1 through 6.</li>
 			<li>
 				<p>Now that your code is in a folder, it's a little more tedious to compile it from the terminal. You'd have to type:</p>
 				<pre><code class="language-shell">gcc LastnameFirstname_lab0/hello_world.c</code></pre>
 				<p>Fortunately, VSCode can do this for us!</p>
-				<p>Choose <samp>Terminal > Configure Default Build Task…</samp> from the main menu (and press enter if asked to choose which tool to use).</p>
+				<p>Choose <kbd><samp>Terminal</samp> > <samp>Configure Default Build Task…</samp></kbd> from the main menu (and press <kbd><kbd>enter</kbd></kbd> if asked to choose which tool to use).</p>
 			</li>
 			<li>
-				<p>You should now be looking at a <samp>tasks.json</samp> file that VSCode has generated for you. We'll need to modify this file slightly so that VSCode doesn't output the program in the same folder as the source. We'll add a little more error checking at the same time.</p>
+				<p>You should now be looking at a <samp>tasks.json</samp> file that was generated for you. We'll need to modify this file slightly so that VSCode doesn't output the program in the same folder as the source. We'll add a little more error checking at the same time.</p>
 				<p>There should be section of this file that currently looks like this:</p>
 				<pre><code class="language-json">
 					"args": [
@@ -162,21 +185,21 @@
 				</code></pre>
 				<p>Change that section to read:</p>
 				<pre><code class="language-json">
-					"args": [
-						<ins>"-Wall",
-						"-Wextra",
-						"-Wpedantic",
-						"-std=c99",</ins>
-						"-g",
-						"${file}",
-						"-o",
-						<span class="changed">"${fileBasenameNoExtension}"</span>
-					],
+"args": [
+<ins>	"-Wall",
+	"-Wextra",
+	"-Wpedantic",
+	"-std=c99",
+</ins>	"-g",
+	"${file}",
+	"-o",
+<span class="changed">	"${fileBasenameNoExtension}"</span>
+],
 				</code></pre>
 				<p>and save your changes.</p>
 			</li>
 			<li>
-				<p>Switch back to your <samp>hello_world.c</samp> file and test that the build works by choosing <samp>Terminal > Run Build Task…</samp> from the main menu.</p>
+				<p>Switch back to your <samp>hello_world.c</samp> file and test that the build works by choosing <kbd><samp>Terminal</samp> > <samp>Run Build Task…</samp></kbd> from the main menu.</p>
 				<p>Notice that a new file (or two) has appeared in the Explorer pane. With this configuration, VSCode will create an executable with the same name as your source file, instead of the default "a.out" we got in Task 2.</p>
 			</li>
 			<li>
@@ -188,30 +211,30 @@
 
 	<section id="task4">
 		<h2>Task 4: ZIP and Submit</h2>
-		<p>Create a ZIP archive of your lab0 folder, <em>including the folder itself</em>. Make sure that it includes your <samp>hello_world.c</samp> source code and <em>does not include</em> any compiled programs.</p>
+		<p>Create a ZIP archive of your lab-0 folder, <em>including the folder itself</em>. Make sure that it includes your <samp>hello_world.c</samp> source code and <em>does not include</em> any compiled programs.</p>
 		<p>To create a ZIP file on MacOS:</p>
 		<ol>
 			<li>Open the Finder application</li>
 			<li>Navigate to your <samp>comp-166</samp> folder</li>
-			<li>Right-click (or control-click) your lab0 sub-folder</li>
+			<li>Right-click (or control-click) your lab-0 sub-folder</li>
 			<li>Choose <samp>Compress "…"</samp> from the context menu</li>
 		</ol>
 		<p>To create a ZIP file on Windows:</p>
 		<ol>
 			<li>Open a File Explorer window</li>
 			<li>Navigate to your <samp>comp-166</samp> folder</li>
-			<li>Right-click your lab0 sub-folder</li>
-			<li>Choose <samp>Send to > Compressed (zipped) folder</samp> from the context menu</li>
-			<li>Type a name for the new ZIP file and press enter to accept</li>
+			<li>Right-click your lab-0 sub-folder</li>
+			<li>Choose <kbd><samp>Send to</samp> > <samp>Compressed (zipped) folder</samp></kbd> from the context menu</li>
+			<li>Type a name for the new ZIP file and press <kbd><kbd>enter</kbd></kbd> to accept</li>
 		</ol>
-		<p>Submit your ZIP file to the Lab-0 assignment in D2L.</p>
+		<p>Submit your ZIP file to the Lab-0 assignment on D2L.</p>
 		<p>All future labs will be submitted in the same way, but will not include a separate task and instructions for this process!</p>
 	</section>
 
 	<section id="submission">
 		<h2>Submission and Grading</h2>
 		<p>
-			Completing all tasks in this lab should result in a directory with settings and folders for every lab to come in this course. <strong>Do not submit your entire workspace.</strong> Create a ZIP archive containing only your Lab-0 folder (named like <samp>LastnameFirstname_lab0</samp>) containing your hello_world.c program. Compress the folder into a ZIP archive and upload it to the D2L assignment.
+			Completing all tasks in this lab should result in a <samp>hello_world.c</samp> program inside of a Lab-0 folder named like <samp>LastnameFirstname_lab0</samp>. Create a ZIP archive containing this entire Lab-0 folder and upload it to the D2L assignment. <strong>Do not include compiled binaries in your submission.</strong>
 		</p>
 		<p>
 			<b>NOTE</b>: This assignment is to be done <em>individually</em>. You can help one another with problems and questions, but in the end everyone must write and submit their own code.
