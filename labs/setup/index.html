@@ -89,7 +89,7 @@
 			<li>Create a <samp>comp-166</samp> folder somewhere you'll be able to find it later.</li>
 			<li>
 				<p>Download the <samp>hello_world.c</samp> source code below, and move it into your comp-166 folder.</p>
-				<a class="sample language-c" href="hello_world.c" download>Download hello_world.c</a>
+				<a class="sample language-clike" href="hello_world.c" download>Download hello_world.c</a>
 				<p>Don't worry about understanding all of this code for now; we'll be learning about each piece later!</p>
 			</li>
 			<li>Open the folder in VSCode, and use the Explorer pane to open hello_world.c</li>
@@ -110,7 +110,7 @@
 						<dd>You probably misspelled something, or forgot to use quotes. This can also happen if you've forgotten to define a variable before using it.</dd>
 
 						<dt>undefined symbols … linker command failed</dt>
-						<dd>You've either misspelled a function name (case matters!) or forgot to <code>#include</code> the header where it is defined.</dd>
+						<dd>You've either misspelled a function name (case matters!) or forgot to <code class="language-clike">#include</code> the header where it is defined.</dd>
 					</dl>
 					<p>If you're stumped, ask for help during a lab session or post a question on the course forum!</p>
 				</details>
@@ -145,7 +145,7 @@
 			<li>Optionally, create additional folders for future labs 1–6.</li>
 			<li>
 				<p>Now that your code is in a folder, it's a little more tedious to compile it from the terminal. You'd have to type:</p>
-				<pre><code class="language-sh">gcc LastnameFirstname_lab0/hello_world.c</code></pre>
+				<pre><code class="language-shell">gcc LastnameFirstname_lab0/hello_world.c</code></pre>
 				<p>Fortunately, VSCode can do this for us!</p>
 				<p>Choose <samp>Terminal > Configure Default Build Task…</samp> from the main menu (and press enter if asked to choose which tool to use).</p>
 			</li>
@@ -181,7 +181,7 @@
 			</li>
 			<li>
 				<p>Open the terminal and test that you can run your program. Eg:</p>
-				<pre><code class="language-sh">./hello_world</code></pre>
+				<pre><code class="language-shell">./hello_world</code></pre>
 			</li>
 		</ol>
 	</section>
