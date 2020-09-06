@@ -156,6 +156,21 @@ samp, kbd, tt {
 	@include monospace;
 	vertical-align: baseline;
 }
+kbd > kbd {
+	background-color: #eee;
+	border: 1px solid #aaa;
+	box-shadow: 0 1px 1px rgba(0,0,0,.15), inset 0 1px 0 0 white;
+	padding: .1em .4em;
+
+	border-radius: 3px;
+}
+kbd > span {
+	background-color: $code;
+	text-shadow: 0 1px 0 white;
+	/* align with kdb's */
+	border: 1px solid transparent;
+	padding: .1em;
+}
 abbr {
 	text-decoration: none;
 }
