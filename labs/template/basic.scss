@@ -152,9 +152,10 @@ h2 {
 h3 {
 	font-size: #{18/$em}rem;
 }
-samp, kbd, tt {
+samp, kbd, var {
 	@include monospace;
 	vertical-align: baseline;
+	font-style: normal;
 }
 kbd > kbd {
 	background-color: #eee;
