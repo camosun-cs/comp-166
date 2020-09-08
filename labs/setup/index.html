@@ -75,9 +75,14 @@
 				<details>
 					<summary>If you are using Windows:</summary>
 					<ol>
-						<li>Go to the <a href="https://sourceforge.net/projects/mingw-w64/files/latest/download">Mingw-w64 download page</a>. The download will begin automatically after a few seconds (you may need to grant the website permission to do so).</li>
+						<li>Go to the <a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/">Mingw-w64 download page</a>. The download will begin automatically after a few seconds (you may need to grant the website permission to do so).</li>
 						<li>Open the downloaded installer and follow the prompts to install the recommended version.</li>
-						<li>When the installation is complete... <!-- FIXME --></li>
+						<li>When the installation is complete, open an Explorer window and find the directory where Mingw-w64 was installed. It is most likely located at <samp style="white-space: nowrap;">C:\Program Files (x86)<wbr/>\mingw<wbr/>-w64<wbr/>\i686<wbr/>-8.1.0<wbr/>-posix<wbr/>-dwarf<wbr/>-rt_v6-rev0</samp>, but the last path segment may be different on your system.</li>
+						<li>Copy the full path of the Mingw-w64 directory. You can click on the downward chevron in the Explorer location bar (left of search and refresh) to get a text representation that you can copy to the clipboard with <kbd><kbd>ctrl</kbd><span>+</span><kbd>c</kbd></kbd>.</li>
+						<li>Use the start menu search box to find and open the "<samp>Edit environment variables for your account</samp>" tool (it can also be found in Windows Settings).</li>
+						<li>Select the <samp>Path</samp> variable and then click the <samp>Edit&hellip;</samp> button. A new editor dialog will open.</li>
+						<li>Click the <samp>New</samp> button and paste in the path to the Mingw-w64 folder that you copied earlier, followed by "<kbd>\bin</kbd>".</li>
+						<li>Click the <samp>OK</samp> button to save your changes.</li>
 					</ol>
 				</details>
 				<details>
@@ -99,7 +104,7 @@
 			<li>Back in <abbr title="Visual Studio Code">VSCode</abbr>, bring your focus back to the terminal panel by clicking anywhere inside it or pressing <kbd><kbd>ctrl</kbd><span>+</span><kbd>`</kbd></kbd> (the <kbd><kbd>`</kbd></kbd> key is usually found to the left of the <kbd><kbd>1</kbd></kbd> key).</li>
 			<li>
 				<p>Type <code class="language-shell">gcc</code> and press <kbd><kbd>enter</kbd></kbd>.</p>
-				<p>If you see a "<samp>command not found</samp>" error, ask for help!</p>
+				<p>If you see a "<samp>command not found</samp>" or "<samp>'gcc' is not recognized</samp>" error, ask for help!</p>
 				<p>If you see "<samp>error: no input files</samp>", everything is working correctly!</p>
 			</li>
 		</ol>
@@ -165,7 +170,7 @@
 		<p>That <samp>comp-166</samp> folder is going to get messy quickly if we just dump everything in there for every lab. Let's make some sub-folders to keep it organized, and setup VSCode to do some of the grunt work for us.</p>
 		<ol class="instructions">
 			<li>Create a folder inside of comp-166 named like <samp>LastnameFirstname_lab0</samp> and move your source code into it.</li>
-			<li>Optionally, create additional folders for future labs 1 through 6.</li>
+			<li>Create additional folders for future labs 1 through 6, following the same naming pattern.</li>
 			<li>
 				<p>Now that your code is in a folder, it's a little more tedious to compile it from the terminal. You'd have to type:</p>
 				<pre><code class="language-shell">gcc LastnameFirstname_lab0/hello_world.c</code></pre>
@@ -205,6 +210,7 @@
 			<li>
 				<p>Open the terminal and test that you can run your program. Eg:</p>
 				<pre><code class="language-shell">./hello_world</code></pre>
+				<p>Note that VSCode's "<samp>Run Without Debugging</samp>" doesn't work properly for C code, so you'll have to run your program manually from the terminal each time. We'll setup and learn about debugging in Lab-1.</p>
 			</li>
 		</ol>
 	</section>
