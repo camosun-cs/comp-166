@@ -1,6 +1,6 @@
 #include <stdio.h>
 
 int main() {
-	"Oops!"
+    "Oops!"
     puts("Hello world!");
 }
