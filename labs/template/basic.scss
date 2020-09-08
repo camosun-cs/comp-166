@@ -165,11 +165,12 @@ kbd > kbd {
 	border-radius: 3px;
 }
 kbd > span {
-	background-color: $code;
+	background-color: rgba(0,0,0,.07);
 	text-shadow: 0 1px 0 white;
 	/* align with kdb's */
 	border: 1px solid transparent;
 	padding: .1em;
+	vertical-align: baseline;
 }
 abbr {
 	text-decoration: none;
