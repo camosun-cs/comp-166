@@ -6,4 +6,5 @@ handouts/
 *.code-workspace
 demo/build/
 _site/
+*.dSYM
 
