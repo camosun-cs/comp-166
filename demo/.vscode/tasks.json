@@ -13,7 +13,7 @@
                 "-g",
                 "${relativeFile}",
                 "-o",
-                "build/${fileBasenameNoExtension}"
+                "${fileBasenameNoExtension}"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
