@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Variables &amp; Operators (Lab 1) - COMP 166</title>
+	<meta name="viewport" content="width=device-width">
+	<base href="https://camosun-cs.github.io/comp-166/labs/vars-and-ops/" target="_blank"/>
+	<link rel="stylesheet" href="../template/bundle.css"/>
+</head>
+<body>
+	<header>
+		<h1>COMP 166 - Lab 1 - Variables &amp; Operators</h1>
+		<nav><ol>
+			<li><a href="#outcomes">Learning Outcomes and Introduction</a></li>
+			<li><a href="#task1"><strong>Task 1</strong>: Acceleration in an Atwood Machine</a></li>
+			<li><a href="#task2"><strong>Task 2</strong>: Money Changer</a></li>
+			<li><a href="#submission">Submission</a></li>
+		</ol></nav>
+	</header>
+
+	<section id="outcomes">
+		<h2>Learning Outcomes and Introduction</h2>
+		<p>
+			In this lab you will create some simple programs to practice what
+			you've learned about:
+		</p>
+		<ul>
+			<li>Use of symbolic constants</li>
+			<li>Use and re-use of variables</li>
+			<li>Numeric operators</li>
+			<li>Expressions, statements, and blocks</li>
+			<li>Order of execution</li>
+			<li>Outputting results</li>
+		</ul>
+		<p>
+			You should pay special attention to using good <em>coding style</em> so that your code is readable, consistant, and easy to understand.
+		</p>
+		<details>
+			<summary>How to handle input</summary>
+			<p>
+				Ideally, both of the programs you create in this assignment should accept user input from the keyboard to get the initial data needed to do their work. You can read in a single integer value and store it in a variable with the following two lines of code:
+			</p>
+			<pre><code class="language-c">
+				int example;
+				scanf("%d", &amp;example);
+			</code></pre>
+			<p>
+				However, at this stage of the course we have not learned enough about C to fully understand how this code works. If you are uncomfortable using this code, feel free to provide your "input" data as hard-coded symbolic constants instead, eg:
+			</p>
+			<pre><code class="language-c">#define INPUT 1324</code></pre>
+		</details>
+	</section>
+
+	<section id="task1">
+		<h2>Task 1: Acceleration in an Atwood Machine</h2>
+		<figure class="right">
+			<img src="atwood-machine.png" alt="diagram of the an Atwood machine"/>
+			<figcaption>Diagram of forces in an Atwood Machine</figcaption>
+		</figure>
+		<p>Write a program that calculates the acceleration of the weights in an <a href="https://en.wikipedia.org/wiki/Atwood_machine">Atwood machine</a>. The weights are connected by a massless cable that runs through an ideal pulley and are under the influence of gravity, such that the acceleration is given by the equation:</p>
+		<style>
+			.eq {
+				display: flex;
+				align-items: center;
+			}
+			.eq > * {
+				padding: 0 0.25em;
+			}
+			.fract {
+				display: inline-flex;
+				flex-direction: column;
+			}
+			.fract-num {
+				border-bottom: 1px solid black;
+			}
+		</style>
+		<div class="eq">
+			<span>a</span>
+			<span>=</span>
+			<span class="fract">
+				<span class="fract-num">m<sub>1</sub> - m<sub>2</sub></span>
+				<span class="fract-den">m<sub>1</sub> + m<sub>2</sub></span>
+			</span>
+			<span>&times;</span>
+			<span>g</span>
+		</div>
+		<p>Assume that <var>g</var>, the acceleration due to gravity, is exactly <samp>9.806 m/s<sup>2</sup></samp>.</p>
+		<p>The masses of the two weights are the inputs to your program, and should be expressed as <em>positive integers</em>. The unit of measurement is irrelevant due to the structure of this formula (although the same unit must be used for both).</p>
+		<p>Your program should print the acceleration in m/s<sup>2</sup> to standard output, with a minimum of <em>2 decimal places of precision</em>.</p>
+	</section>
+
+	<section id="task2">
+		<h2>Task 2: Money Changer</h2>
+		<p>
+			Write a program that converts a pool of loose change into bills and coins <strong>using the largest possible denominations</strong>. The program should take a total value of cash in cents as input, and print the number of $10 bills, toonies ($2 coins), quarters (25¢), dimes (10¢), and pennies (1¢) that together total that value as output.
+		</p>
+		<p>
+			Your program should be written in a way that allows code for new denominations to be added (or existing denominations to be removed) without substantially changing the code for other bills and coins. For example, it should be easy to add output for $20 bills, loonies ($1), or nickles (5¢).
+		</p>
+		<p>
+			Your approach should be something like:
+		</p>
+		<ol>
+			<li>Prompt the user to input a total value, or write a clear section of code comments to show which symbolic constant should be changed for different values.</li>
+			<li>Store the total target amount, in cents, in a variable.</li>
+			<li>Divide by <samp>1000</samp> to find the number of $10 bills, and reduce the target amount to whatever is left over.</li>
+			<li>Divide by <samp>200</samp> to find the number of $2 coins, and similarly reduce the target amount.</li>
+			<li>Similarly calculate the number of quarters and dimes.</li>
+			<li>Record any remainder as the number of pennies.</li>
+			<li>Print the number of bills or coins of each denomination (including zeros).</li>
+		</ol>
+		<p>For example, given an input of <samp>3049</samp> cents, your output might look like:</p>
+		<pre><samp>3 $10 bills
+0 toonies
+1 quarters
+2 dimes
+4 pennies</samp></pre>
+	</section>
+
+	<section id="submission">
+		<h2>Submission and Grading</h2>
+		<p>
+			Completing all tasks in this lab should result in <strong>2</strong> separate C files within a single folder named like <samp>LastnameFirstname_lab1</samp>. Compress the folder into a ZIP archive and upload it to the D2L assignment.
+		</p>
+		<p>
+			The marks for this lab are heavily weighted towards good coding practice and style. Pay attention to your code formatting, use comments to clarify your code, and make sure you are using symbolic constants and variables effectively.
+		</p>
+		<p>
+			<b>NOTE</b>: This assignment is to be done <em>individually</em>. You can help one another with problems and questions, but in the end everyone must write and submit their own code.
+		</p>
+		<table class="marks">
+			<thead>
+				<tr><th>Criteria</th><th>Marks</th></tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Programs compile and run without error</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>Good coding style</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>Task requirements met or exceeded</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>Learning Outcomes achieved</td>
+					<td>3</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th>Total</th>
+					<td>12</td>
+				</tr>
+			</tfoot>
+		</table>
+	</section>
+
+	<script src="../template/bundle.js" defer></script>
+</body>
+</html>
