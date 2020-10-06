@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Conditional Logic (Lab 2) - COMP 166</title>
+	<meta name="viewport" content="width=device-width"/>
+	<base href="https://camosun-cs.github.io/comp-166/labs/conditional-logic/" target="_blank"/>
+	<link rel="stylesheet" href="../template/bundle.css"/>
+</head>
+<body>
+	<header>
+		<h1>COMP 166 - Lab 2 - Conditional Logic</h1>
+		<nav><ol>
+			<!-- every lab should start with this -->
+			<li><a href="#outcomes">Learning Outcomes and Introduction</a></li>
+			<!-- repeat one for each task, adjusting @href for each -->
+			<li><a href="#task1"><strong>Task 1</strong>: Temperature Conversion</a></li>
+			<li><a href="#task2"><strong>Task 2</strong>: Days in a Month</a></li>
+			<li><a href="#task3"><strong>Task 3</strong>: Play The Lottery</a></li>
+			<li><a href="#submission">Submission</a></li>
+		</ol></nav>
+	</header>
+
+	<section id="outcomes">
+		<h2>Learning Outcomes and Introduction</h2>
+		<p>In this lab you will create three small programs using what you've learned about:</p>
+		<ul>
+			<li>Input using command-line arguments</li>
+			<li>
+				<code class="language-c">if</code>,
+				<code class="language-c">else</code>,
+				and <code  class="language-c">switch</code> statements
+			</li>
+			<li>
+				Logical operators
+				(<code  class="language-c">&&</code>,
+				<code class="language-c">||</code>,
+				<code class="language-c">!</code>)
+			</li>
+			<li>
+				Relational operators
+				(<code  class="language-c">></code>,
+				<code class="language-c"><</code>,
+				<code class="language-c"><=</code>,
+				<code class="language-c">>=</code>,
+				<code class="language-c">==</code>,
+				<code class="language-c">!=</code>)
+			</li>
+			<li>Good coding style</li>
+		</ul>
+		<p>
+			You will also learn how to convert strings to floating-point and integer values, and how to manipulate random numbers using functions in the <code>&lt;stdlib.h></code> library.
+		</p>
+	</section>
+
+	<section id="task1">
+		<h2>Task 1: Temperature Conversion</h2>
+		<p>Write a program that accepts a temperature reading as input, and outputs that temperature converted to the Kelvin, Celsius, and Fahrenheit scales.</p>
+		<p>Your program should take two command line arguments: a number for the temperature reading, and a letter denoting the scale used (eg. <samp>C</samp>, <samp>K</samp>, or <samp>F</samp>). If the user does not provide both parameters, or the provided values are invalid, your program should print an error message and a short description of the expected usage.</p>
+		<aside>Hint: write your program using hard-coded input values first, and add code for user input from the command line after you have the basics working!</aside>
+		<details>
+			<summary>Using numbers from the command line</summary>
+			<p>Command line arguments always come into your program as <em>string values</em>. In order to use these as numbers that you can do math with, you will first need to <em>parse</em> the string using an appropriate function from the <code>&lt;stdlib.h></code> library.</p>
+			<p>In this case, you'll want to use the <a href="https://devdocs.io/c/string/byte/strtof"><code class="language-c">strtof()</code></a> function. Here's a simple example of how to use it:</p>
+			<a class="sample language-c" href="strtof.c">strtof.c</a>
+			<p>The first parameter is the string that you want to convert into a number. The second parameter, if not <code class="langauge-c">NULL</code>, will be updated to point <em>just after</em> the last parsed character from the input string. This is useful for checking whether or not the value was successfully parsed: if the result is the same as the input string pointer, the value was not recognized.</p>
+			<p>There is a similar function in <code>&lt;stdlib.h></code> for parsing strings as integers: <a href="https://devdocs.io/c/string/byte/strtol"><code class="language-c">strtol()</code></a>. This one takes a third parameter that specifies the numeric base, which you'll normally want to set to <samp>10</samp>.</p>
+			<p>If you don't need to do any error-checking, you can simplify things considerably by using the <a href="https://devdocs.io/c/string/byte/atof"><code class="language-c">atof()</code></a> and <a href="https://devdocs.io/c/string/byte/atoi"><code class="language-c">atoi()</code></a> functions instead.</p>
+		</details>
+		<p>The Fahrenheit temperature scale and the Celsius temperature scale are related by the equation: <samp>F = C * 1.8 + 32</samp></p>
+		<p>Celsius and Kelvin are related by the equation: <samp>C = K - 272.15</samp></p>
+	</section>
+
+	<section id="task2">
+		<h2>Task 2: Days in a Month</h2>
+		<p>Write a program that takes a year number and a month number as input from the command line and prints the number of days in the given month. Use a switch statement with a nested if/else structure to determine the correct number of days.</p>
+		<aside>Remember that you can use the "fall-through" behavior of the switch statement to avoid code duplication for similar cases. Also, cases do not have to be in any particular order, so put them in the order that saves the most typing!</aside>
+		<p>Do not use any of the functions from the standard <code>&lt;time.h></code> library in your solution.</p>
+		<p>Note: February has a different number of days depending on the year; 28 days in common years, and 29 in leap years. Leap years are divisible by 4, but not by 100 unless also divisible by 400.</p>
+	</section>
+
+	<section id="task3">
+		<h2>Task 3: Play the Lottery</h2>
+		<p>Write a program to run a simple lottery. The program should randomly generate a lottery number between 0 and 99, accept a users's guess from the command line, and determine the user's winnings according to the following rules:</p>
+		<ul>
+			<li>If the user input matches the lottery number exactly, the award is $10,000.</li>
+			<li>If the user enters the correct digits, but in the wrong order, the award is $3000.</li>
+			<li>If the lottery number has two digits and the user's guess contains just one of them, the award is $1000.</li>
+			<li>In all other cases, there is no award.</li>
+		</ul>
+		<aside>Remember to check that the user input is within the range you expect for this lottery.</aside>
+		<details>
+			<summary>Generating random numbers</summary>
+			<p>Because computers are <em>deterministic</em>, producing actual random data values is quite tricky. The usual approach is to take some external data value that is unpredictable (such as the current time) and use it as the "seed" to a bunch of math that produces a sequence of psuedo-random values. The values you get are actually still deterministic, but as long as the seed isn't known and the math is well-designed they will appear to be random.</p>
+			<p>C99 includes <a href="https://devdocs.io/c/numeric/random/srand"><code class="language-c">srand()</code></a> and <a href="https://devdocs.io/c/numeric/random/rand"><code class="language-c">rand()</code></a> functions in the <code>&lt;stdlib.h></code> library that set a seed and produce psuedo-random values from it respectively. Unfortunately, most implementations of these functions are based on very simplistic math and do a really poor job of appearing random. For almost every application, you shouldn't use them.</p>
+			<p>POSIX provides two very similar functions, <code class="language-c">srandom()</code> and <code class="language-c">random()</code> (also defined in <code>&lt;stdlib.h></code>, that are used in the same way and perform a little better. We'll use them for this assignment. Here's an example:</p>
+			<a href="random.c" class="sample language-c">random.c</a>
+			<p>For real applications where randomness is actually important, even the POSIX standard library functions shouldn't be used. Your code in these cases will need to rely on external libraries that provide better solutions.</p>
+		</details>
+	</section>
+
+	<section id="submission">
+		<h2>Submission</h2>
+		<p>
+			Completing all tasks in this lab should result in <strong>3</strong> separate C files within a single folder named like <samp>LastnameFirstname_lab2</samp>. Compress the folder into a ZIP archive and upload it to the D2L assignment.
+		</p>
+		<p>
+			The marks for this lab are heavily weighted towards good coding practice and style. Pay attention to your code formatting, use comments to clarify your code, and make sure you are using defines, variables, and array notation effectively.
+		</p>
+		<p>
+			<b>NOTE</b>: This assignment is to be done <em>individually</em>. You can help one another with problems and questions, but in the end everyone must write and submit their own code.
+		</p>
+		<table class="marks">
+			<thead>
+				<tr><th>Criteria</th><th>Marks</th></tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Programs compile and run without error</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>Good coding style</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>Task requirements met or exceeded</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>Learning Outcomes achieved</td>
+					<td>3</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th>Total</th>
+					<td>12</td>
+				</tr>
+			</tfoot>
+		</table>
+	</section>
+
+	<script src="../template/bundle.js" defer></script>
+</body>
+</html>
