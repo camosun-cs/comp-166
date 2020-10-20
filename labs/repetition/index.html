@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+	<meta charset="utf-8">
+	<title>Repetition (Lab 3) - COMP 166</title>
+	<meta name="viewport" content="width=device-width"/>
+	<base href="https://camosun-cs.github.io/comp-166/labs/repetition/" target="_blank"/>
+	<link rel="stylesheet" href="../template/bundle.css"/>
+	<style>
+		.eq {
+			display: flex;
+			align-items: center;
+		}
+		.eq > * {
+			padding: 0 0.25em;
+		}
+		.fract {
+			display: inline-flex;
+			flex-direction: column;
+			text-align: center;
+		}
+		.fract-num {
+			border-bottom: 1px solid black;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>COMP 166 - Lab 3 - Repetition</h1>
+		<nav><ol>
+			<li><a href="#outcomes">Learning Outcomes and Introduction</a></li>
+			<li><a href="#task1"><strong>Task 1</strong>: "Infinite" loops</a></li>
+			<li><a href="#task2"><strong>Task 2</strong>: Printing a matrix</a></li>
+			<li><a href="#task3"><strong>Task 3</strong>: Modelling Acceleration</a></li>
+			<li><a href="#submission">Submission</a></li>
+		</ol></nav>
+	</header>
+
+	<section id="outcomes">
+		<h2>Learning Outcomes and Introduction</h2>
+		<p>In this lab assignment you will practice:</p>
+		<ul>
+			<li>Using <code class="language-c">for</code>, <code class="language-c">while</code>, and <code class="language-c">do &hellip; while</code> looping statements</li>
+			<li>Creating and stopping "infinite" loops</li>
+			<li>Managing varible scope in and around loops</li>
+			<li>Using nested loops</li>
+			<li>Handling user input</li>
+			<li>Solving a physics problem using numerical approximation</li>
+		</ul>
+	</section>
+
+	<section id="task1">
+		<h2>Task 1: "Infinite" loops</h2>
+		<ol class="instructions">
+			<li>
+				<p>Download the following source code and add it to your lab source folder.</p>
+				<a class="sample language-c" href="interest.c" download>Download interest.c</a>
+			</li>
+			<li>
+				Compile and run the program, and make sure that you understand what it is doing and how it works.
+			</li>
+			<li>
+				<p>Wrap the entire program in an infinite loop so that you can enter many different principal amounts without having to restart the program each time.</p>
+				<details>
+					<summary>How to loop forever</summary>
+					<p>You can create a loop that will run indefinitely by using a constant, non-zero condition value. For example:</p>
+					<pre><code class="language-c">
+						while (1) {
+							// inside here will be repeated forever
+						}
+					</code></pre>
+					<p>If you import <code>&lt;stdbool.h></code>, you could also use the <code class="language-c">true</code> constant to make it a little more readable.</p>
+					<p>Many C programmers prefer to use <code>for</code> loops instead. Since we want the loop to run forever we can leave out a lot of the usual details and distill the syntax down to just this:</p>
+					<pre><code class="language-c">
+						for (;;) {
+							// inside here will be repeated forever
+						}
+					</code></pre>
+					<p>These two examples are functionally identical, so choose the one that makes the most sense to you.</p>
+					<p>There are many other ways you can make an infinite loop, but these two approaches are the most idiomatic way that other programmers will recognize and will make it clear that you really meant to do this!</p>
+				</details>
+				<aside>
+					Note: you can force the program to stop at any time by pressing <kbd><kbd>ctrl</kbd><span>+</span><kbd>c</kbd></kbd>.
+				</aside>
+			</li>
+			<li>
+				<p>Consider which of the variables in this program need to be freshly created each time your program loops, and which can be created just once when your program starts. Move variables outside of the infinite loop if it makes sense to do so!</p>
+				<p>Variables that are only used to control a loop (iteration variables) should usually be declared with the loop. Constants should <em>always</em> be declared at the beginning of your program.</p>
+			</li>
+			<li>
+				<p>Use a <strong>second, nested inifinite loop</strong>, along with conditional branches and the <code class="language-c">break</code> keyword to make sure that the user enters a usable dollar value for the pricipal amount (ie. greater than 0) before allowing the program to continue calculating interest.</p>
+				<details>
+					<summary>Example input loop</summary>
+					<p>This example requires the user to enter a negative integer before continuing:</p>
+					<a href="input-check.c" class="sample language-c" download>Download input-check.c</a>
+				</details>
+			</li>
+		</ol>
+	</section>
+
+	<section id="task2">
+		<h2>Task 2: Printing a matrix</h2>
+		<p>
+			Create a program that asks the user to enter a number and prints an inverted triangle with that many rows (or some other interesting pattern) using <em>nested</em> <code class="language-c">for</code> loops.
+		</p>
+		<details>
+			<summary>Example input and output</summary>
+			<p>Given "5", output:</p>
+			<pre>*****
+****
+***
+**
+*</pre>
+			<p>Given "13", output:</p>
+			<pre>*************
+************
+***********
+**********
+*********
+********
+*******
+******
+*****
+****
+***
+**
+*</pre>
+		</details>
+		<ol class="instructions">
+			<li>Start by creating some code to print a single line of asterisks ("*") of any given length. Use a <code class="language-c">for</code> loop.</li>
+			<li>
+				<p>Wrap this code in another <code class="language-c">for</code> loop to repeat it and create a square of asterisks.</p>
+				<aside>Make sure to use different looping variables for the outer and inner loops!</aside>
+			</li>
+			<li>Adjust the conditions on your inner <code class="language-c">for</code> loop to limit the number of asterisks printed based on the state of the outer loop's variables.</li>
+			<li>
+				<p>Experiment with different looping conditions, conditional branches, and extra inputs to create different patterns.</p>
+				<details>
+					<summary>Example ideas</summary>
+					<ul>
+						<li>
+							<p>Let the user choose what symbols to use for drawing</p>
+						</li>
+						<li>
+							<p>Replace the asterisks on the diagonal edge with a different character</p>
+							<pre style="margin:1em 0;">$
+*$
+**$</pre>
+						</li>
+						<li>
+							<p>Print the triangle facing different directions</p>
+							<pre style="margin:1em 0;">  *
+ **
+***</pre>
+							<p>Or like:</p>
+							<pre style="margin:1em 0;">  *
+ ***
+*****</pre>
+						</li>
+						<li>
+							<p>Output a diamond instead of a triangle</p>
+							<pre>  *
+ ***
+*****
+ ***
+  *</pre>
+					</ul>
+				</details>
+			</li>
+		</ol>
+	</section>
+
+	<section id="task3">
+		<h2>Task 3: Modelling Acceleration</h2>
+		<p>Create a program that will calculate the height and velocity of a falling object over time, taking into account non-linear atmospheric drag. To keep things relatively simple, assume that the object starts at rest and moves in one direction due to a constant gravitational force, and that the atmospheric density is similarly constant throughout its path of travel. Use an interative numerical approximation approach for your solution.</p>
+		<aside>Hint: a <code class="language-c">do … while</code> loop would be a good fit for the calculations in this task!</aside>
+
+		<details>
+			<summary>The math…</summary>
+			<p>The force of drag due to atmospheric resistance is given by the formula:</p>
+			<div class="eq">
+				<span>F<sub>d</sub> = </span>
+				<span class="fract">
+					<span class="fract-num">C𝜌Av<sup>2</sup></span>
+					<span class="fract-den">2</span>
+				</span>
+			</div>
+			<p>Where <strong>C</strong> is the drag coefficient, <strong>𝜌</strong> is the atmospheric density, <strong>A</strong> is the cross-sectional area, and <strong>v</strong> is the velocity.</p>
+			<p>Because the drag forces on the falling object depend on the velocity, which in turn depends on the net forces, a purely analytical approach to solving this problem would be quite complicated! Instead, we can simulate the problem much more simply on a computer using numerical approximations at discrete time intervals. We can calculate the acceleration of the object due to the net forces acting on it at a given moment and then assume that this acceleration stays constant over a short period of time. This allows us to approximate the velocity at the end of this time interval, and then use that velocity in the calculation of forces for the next interval.</p>
+			<p>At any given instant in time, the acceleration is given by:</p>
+			<div class="eq">
+				<span>a = </span>
+				<span class="fract">
+					<span class="fract-num">F<sub>net</sub></span>
+					<span class="fract-denm">m</span>
+				</span>
+				<span> = </span>
+				<span class="fract">
+					<span class="fract-num">mg - F<sub>d</sub></span>
+					<span class="fract-denm">m</span>
+				</span>
+			</div>
+			<p>Where <strong>m</strong> is the mass of the object, and <strong>g</strong> is the acceleration due to gravity. Over a small enough interval of time, this acceleration is approximately constant, so the change in velocity and height of the object after a time interval <strong>t</strong> will be:</p>
+			<div class="eq">
+				<span>Δv = at</span>
+			</div>
+			<div class="eq">
+				<span>Δh = v<sub>0</sub>t + </span>
+				<span class="fract">
+					<span class="fract-num">at<sup>2</sup></span>
+					<span class="fract-den">2</span>
+				</span>
+			</div>
+			<p>The resulting velocity can then be fed back into the acceleration equation for the next time interval!</p>
+		</details>
+
+		<p>Your program should <strong>minimally</strong> accept user inputs for:</p>
+		<ul>
+			<li>the initial drop height, in meters</li>
+			<li>the mass of the falling object, in kilograms</li>
+			<li>the length of the approximation time interval, in seconds</li>
+		</ul>
+		<p>You will also need a cross-sectional area measurement, drag coefficient, and atmospheric density, but you can hard-code these values using symbolic constants if you like to keep the program a little simpler.</p>
+		<p>For each time step, output the simulated time elapsed and the object's instantaneous height and velocity. Your program should end when the object reaches height 0, or when the simulation has reached 2000 iterations, whichever comes first.</p>
+		<details>
+			<summary>Example program input and output</summary>
+			<p>Feel free to experiment with different output formatting and different ways of taking in user input. This is just an example!</p>
+			<pre><samp>Gravitational force: 9.806 m/s^2
+Atmospheric density (kg/m^3): 1.225
+Drag coefficient: 0.5
+Mass of falling object (kg): 1.00
+Drop height (m): 2.00
+
+Time (s)    Height (m)    Velocity (m/s)
+   0.000          2.00        0.00
+   0.100          1.95        0.98
+   0.200          1.81        1.93
+   0.300          1.57        2.80
+   0.400          1.25        3.54
+   0.500          0.87        4.14
+   0.600          0.43        4.59
+   0.700          0.00        0.00</samp></pre>
+		</details>
+	</section>
+
+	<section id="submission">
+		<h2>Submission</h2>
+		<p>
+			Completing all tasks in this lab should result in <strong>3</strong> separate files within a single folder named like <samp>LastnameFirstname_lab3</samp>. Compress the folder into a ZIP archive and upload it to the D2L assignment.
+		</p>
+		<p>
+			The marks for this lab are heavily weighted towards good coding practice and style. Pay attention to your code formatting, use comments to clarify your code, and make sure you are using defines, arrays, loops, and functions effectively.
+		</p>
+		<p>
+			<b>NOTE</b>: This assignment is to be done <em>individually</em>. You can help one another with problems and questions, but in the end everyone must write and submit their own code.
+		</p>
+		<table class="marks">
+			<thead>
+				<tr><th>Criteria</th><th>Marks</th></tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Programs compile and run without error</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>Good coding style</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>Task requirements met or exceeded</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>Learning Outcomes achieved</td>
+					<td>3</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th>Total</th>
+					<td>12</td>
+				</tr>
+			</tfoot>
+		</table>
+	</section>
+
+	<script src="../template/bundle.js" defer></script>
+</body>
+</html>
