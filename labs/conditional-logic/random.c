@@ -7,6 +7,6 @@
 
 int main() {
 	srandom(time(NULL));
-	int answer = random() / (RMAX / 99);
+	int answer = random() % 100;
 	printf("random number [0-99]: %d\n", answer);
 }
