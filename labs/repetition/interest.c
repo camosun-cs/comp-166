@@ -26,7 +26,7 @@ int main() {
 
     for (int year = 1; year <= DISPLAY_YEARS; year++) {
         printf(
-            "year %d:  $%ld.%0.2ld\n",
+            "year %d:  $%ld.%02ld\n",
             year,
             balance[year] / CENTS,
             balance[year] % CENTS
