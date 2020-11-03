@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+	<meta charset="utf-8">
+	<title>Functions (Lab 4) - COMP 166</title>
+	<meta name="viewport" content="width=device-width"/>
+	<base href="https://camosun-cs.github.io/comp-166/labs/functions/" target="_blank"/>
+	<link rel="stylesheet" href="../template/bundle.css"/>
+</head>
+<body>
+	<header>
+		<h1>COMP 166 - Lab 4 - Functions</h1>
+		<nav><ol>
+			<li><a href="#outcomes">Learning Outcomes and Introduction</a></li>
+			<li><a href="#task1"><strong>Task 1</strong>: Enhanced Change Machine</a></li>
+			<li><a href="#submission">Submission</a></li>
+		</ol></nav>
+	</header>
+
+	<section id="outcomes">
+		<h2>Learning Outcomes and Introduction</h2>
+		<p>In this lab assignment you will practice:</p>
+		<ul>
+			<li>creating and using functions</li>
+			<li>splitting code into small reusable components</li>
+			<li>using parameters and return values</li>
+			<li>managing arrays of integers with functions</li>
+			<li>using <code class="language-c">static</code> variables</li>
+			<li>documenting functions with Doxygen comments</li>
+		</ul>
+	</section>
+
+	<section id="task1">
+		<h2>Task 1: Enhanced Change Machine</h2>
+		<p>Create a change machine program based on the <a href="../vars-and-ops/#task2">Task 2: Money Changer</a> program from Lab 1, with a few enhancements.</p>
+		<p><strong>Important</strong>: do not use global variables for any part of this task!</p>
+		<details>
+			<summary>Starter code</summary>
+			<p>If you do not have a working solution for Lab 1's Money Changer program, you can use this simplified version instead:</p>
+			<a href="change.c" class="language-c sample" download>download change.c</a>
+		</details>
+		<ol class="instructions">
+			<li>Create a new function that accepts user input for an amount of money in normal decimal notation (eg. "$10.25" for 10 dollars and 25 cents), and returns the amount as an integer number of cents. Use this new function from main to handle all user input.</li>
+			<li>
+				<p>Create another function to calculate the number of bills and coins to return as change. Remove the related code from main and use a call to this new function instead. The function will need at least two formal parameters: one for the amount of money to exchange (in cents), and a second for an array that will be used to store the resulting bill and coin amounts.</p>
+				<aside>Note that this function can have a <code class="language-c">void</code> return type for now, but will need to be modified to return an integer at a later step.</aside>
+			</li>
+			<li>Create a third new function that prints the array of bill and coin counts in a human-friendly format. Modify main so it uses this function instead of handling its own output.</li>
+			<li>Use an infinite loop in your main function to allow the user to exchange many different amounts of money without restarting the program. If you haven't already done so, use your new functions to handle all input, calculations, and output – main should only be responsible for the overall program flow at this point!</li>
+			<li>
+				<p>Modify your change calculation function so that it draws from a limited "inventory" of bills and coins that is reduced each time the function is used. If there are not enough of a larger denomination left in the inventory to cover the amount to exchange, compensate by using more of a lower denomination. If it is impossible to cover the full amount using what's left in the inventory, provide as much correct change as possible and report the unfulfilled amount using the return value of the function.</p>
+				<details>
+					<summary>Examples</summary>
+					<p>Given that there are two loonies, five quarters, and 22 pennies in the inventory when the function is called:</p>
+					<ul>
+						<li>If $1.10 needs to be exchanged, the function should provide one loonie and 10 pennies in change, and return 0. One loonie, five quarters, and 12 pennies will be left in the inventory.</li>
+						<li>If $3.10 needs to be exchanged, the function should provide two loonies, four quarters, and 10 pennies in change, and return 0. One quarter and 12 pennies will be left in the inventory.</li>
+						<li>If $1.24 needs to be exchanged, the function should provide one loonie and 22 pennies in change, and return 2. One loonie and five quarters will be left in the inventory.</li>
+						<li>If $4.00 needs to be exchanged, the function should provide all of its coins in change (two loonies, five quarters, and 22 pennies), and return 45. Nothing will be left in the inventory.</li>
+					</ul>
+				</details>
+			</li>
+			<li>Modify your main function so that your program ends once the change calculation function is unable to exchange the full amount.</li>
+			<li>Use Doxygen comments to document the purpose, parameters, and return values of each function other than main. Describe the overall program using a Doxygen comment at the top of your main program file.</li>
+		</ol>
+	</section>
+
+	<section id="submission">
+		<h2>Submission</h2>
+		<p>
+			Completing all tasks in this lab should result in <strong>1 or more</strong> <samp>.c</samp> files comprising a single program within a folder named like <samp>LastnameFirstname_lab4</samp>. Compress the folder into a ZIP archive and upload it to the D2L assignment.
+		</p>
+		<p>
+			The marks for this lab are heavily weighted towards good coding practice and style. Pay attention to your code formatting, use comments to clarify your code, and make sure you are using defines, arrays, loops, and functions effectively.
+		</p>
+		<p>
+			<b>NOTE</b>: This assignment is to be done <em>individually</em>. You can help one another with problems and questions, but in the end everyone must write and submit their own code.
+		</p>
+		<table class="marks">
+			<thead>
+				<tr><th>Criteria</th><th>Marks</th></tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Programs compile and run without error</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>Good coding style</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>Task requirements met or exceeded</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>Learning Outcomes achieved</td>
+					<td>3</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th>Total</th>
+					<td>12</td>
+				</tr>
+			</tfoot>
+		</table>
+	</section>
+
+	<script src="../template/bundle.js" defer></script>
+	<!-- additional scripts can be added here if necessary -->
+</body>
+</html>
