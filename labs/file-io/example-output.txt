@@ -1,0 +1,14 @@
+Maximum recorded at 2020-11-17T16:55:00 (310)
+Minimum recorded at 2020-11-17T16:56:00 (-5.12339)
+
+Sensor 1:
+- mean: 10.01
+- deviation: 22.59
+
+Sensor 2:
+- mean: 79.56
+- deviation: 134.35
+
+Sensor 3:
+- mean: 7.41
+- deviation: 12.85
