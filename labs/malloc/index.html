@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+	<meta charset="utf-8">
+	<title>Dynamic Memory and Structs (Lab 6) - COMP 166</title>
+	<meta name="viewport" content="width=device-width"/>
+	<base href="https://camosun-cs.github.io/comp-166/labs/malloc/" target="_blank"/>
+	<link rel="stylesheet" href="../template/bundle.css"/>
+</head>
+<body>
+	<header>
+		<h1>COMP 166 - Lab 6 - Dynamic Memory and Structs</h1>
+		<nav><ol>
+			<li><a href="#outcomes">Learning Outcomes and Introduction</a></li>
+			<li><a href="#task1"><strong>Task 1</strong>: Longest Words</a></li>
+			<li><a href="#task2"><strong>Task 2</strong>: Math with Units</a></li>
+			<li><a href="#submission">Submission</a></li>
+		</ol></nav>
+	</header>
+
+	<section id="outcomes">
+		<h2>Learning Outcomes and Introduction</h2>
+		<p>In this lab assignment you will learn about:</p>
+		<ul>
+			<li>reserving memory using <code>malloc</code> and/or <code>calloc</code></li>
+			<li>managing resizable arrays using <code>realloc</code></li>
+			<li>releasing memory using <code>free</code></li>
+			<li>handling input with no pre-determined size constraints</li>
+			<li>using structs to organize data</li>
+		</ul>
+	</section>
+
+	<section id="task1">
+		<h2>Task 1: Longest Words</h2>
+		<p>Create a program that finds the longest words in the input.</p>
+		<p>Your program should accept a filename as a command-line argument. If provided, input will be read from the named file. Otherwise, input will be read from the standard input stream.</p>
+		<p>The input will consist of a mix of letters, numbers, whitespace, punctuation, and other symbols. Your program should consider only consecutive sequences of one or more latin letters (A-Z, a-z) as words, and treat everything else as word separators. For example, <code>"goodbye2you forevè"</code> would be interpretted as three words: <code>"goodbye"</code>, <code>"you"</code>, and <code>"forev"</code>.</p>
+		<p>The end goal is to collect the list of unique words of the same length that are longer than all other words in the input. For example, if the longest word in the input is eight letters long, collect the list of every eight-letter word, ignoring duplicates. Words that differ only in letter case should be considered equivalent. Print the longest words found (in any order) to standard output.</p>
+		<p>Make use of <code>malloc</code>, <code>calloc</code>, and <code>realloc</code> to allow your program to handle inputs of any size. Specifically, do not make any assumptions about the maximum length of any one word, the number of unique words that will be found, the maximum line length, or maximum number of input lines. Do not attempt to store the entire file's content in memory at once. Make use of <code>free</code> to minimize the amount of memory used by your program as it is running. Do not retain words in memory that are known to not be among the longest in the input.</p>
+		<p>If your program is unable to complete processing its input because it cannot reserve more memory (eg. <code>malloc</code> returns <code>NULL</code>), report the error and then print the list of longest words found so far.</p>
+		<details>
+			<summary>Suggested approach</summary>
+			<p>There are many ways to manage a dynamicly changing list of data. For simplicity, I recommend storing each word in an appropriately-sized chunk of memory allocated with malloc, and keep track of the list of words with an array of pointers (also allocated with malloc). The array should start relatively small, but may need to be resized with <code>realloc</code> as the program progresses. Keep track of how large the array currently is in one variable, and how much space is used so far in another. When you run out of room, resize the array to provide twice as much space.</p>
+		</details>
+ 	</section>
+
+	<section id="task2">
+		<h2>Task 2: Math with Units</h2>
+		<p>Create a calculator program that is able to add, subtract, multiply, and divide two measurements with units.</p>
+		<ol class="instructions">
+			<li>
+				<p>Start by creating a structure type to represent a measurement, and a function that creates a value of this type from an input string.</p>
+				<p>Valid input values will consist of a real decimal number in fixed-point notation, followed by one or more spaces, followed by a unit name. Unit names are composed of an optional SI prefix letter, followed by one or more letters identifying the base unit.</p>
+				<details>
+					<summary>Example meansurement strings</summary>
+					<ul>
+						<li><samp>3.2 g</samp></li>
+						<li><samp>1000 km</samp></li>
+						<li><samp>4.3333 in</samp></li>
+						<li><samp>-3.0 hours</samp></li>
+						<li><samp>5 GPa</samp></li>
+					</ul>
+				</details>
+			</li>
+			<li>
+				<p>Create a function that accepts a measurement value and returns a "normalized" version that does not use SI prefixes in its unit name but has the same value. For example, given a measurement representing <samp>3 kg</samp>, the function should produce the measurement <samp>3000 g</samp>.</p>
+				<aside>Note: base units must always be at least one letter long. Thus <samp>3 m</samp> is already normalized despite "m" looking like an SI prefix.</aside>
+				<details>
+					<summary>SI prefix values</summary>
+					<p>Your code should support at least the following SI prefix values:</p>
+					<table>
+						<thead>
+							<tr>
+								<th>Symbol</th>
+								<th>Factor</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>T</td>
+								<td>10<sup>12</sup></td>
+							</tr>
+							<tr>
+								<td>G</td>
+								<td>10<sup>9</sup></td>
+							</tr>
+							<tr>
+								<td>M</td>
+								<td>10<sup>6</sup></td>
+							</tr>
+							<tr>
+								<td>k</td>
+								<td>10<sup>3</sup></td>
+							</tr>
+							<tr>
+								<td>c</td>
+								<td>10<sup>-2</sup></td>
+							</tr>
+							<tr>
+								<td>m</td>
+								<td>10<sup>-3</sup></td>
+							</tr>
+							<tr>
+								<td>u</td>
+								<td>10<sup>-6</sup></td>
+							</tr>
+							<tr>
+								<td>n</td>
+								<td>10<sup>-9</sup></td>
+							</tr>
+						</tbody>
+					</table>
+				</details>
+			</li>
+			<li>
+				<p>Create addition, subtraction, multiplication, and division functions that each take in two measurement values and calculate the resulting measurement.</p>
+				<p>These functions should use the normalization function described above on their input values before performing the operation.</p>
+				<p>The addition and subtraction functions should report an error if the normalized inputs are different units.</p>
+				<p>The multiplication and division functions should accept measurements of any unit and produce a measurement with a composite unit. For example, multiplying <samp>3 km</samp> by <samp>4 g</samp> should produce <samp>12000 m*g</samp>, and dividing <samp>4 km</samp> by <samp>2 ks</samp> should produce <samp>2 m/s</samp>. <strong>Your code does not need to handle these composite units as inputs.</strong></p>
+				<p>Division by zero should report an error.</p>
+			</li>
+			<li>
+				<p>Lastly, add code to your main function to read in two measurements and an operator (one of <samp>+</samp>, <samp>-</samp>, <samp>*</samp>, or <samp>/</samp>) as input, and print the result as output. Provide helpful error messages in response to invalid inputs.</p>
+			</li>
+		</ol>
+	</section>
+
+	<section id="submission">
+		<h2>Submission</h2>
+		<p>
+			Completing all tasks in this lab should result in <strong>at least 2</strong> source files within a single folder named like <samp>LastnameFirstname_lab6</samp>. Compress the folder into a ZIP archive and upload it to the D2L assignment.
+		</p>
+		<p>
+			The marks for this lab are heavily weighted towards good coding practice and style. Pay attention to your code formatting, use comments to clarify your code, and make sure you are using defines, arrays, loops, and functions effectively.
+		</p>
+		<p>
+			<b>NOTE</b>: This assignment is to be done <em>individually</em>. You can help one another with problems and questions, but in the end everyone must write and submit their own code.
+		</p>
+		<table class="marks">
+			<thead>
+				<tr><th>Criteria</th><th>Marks</th></tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Programs compile and run without error</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>Good coding style</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>Task requirements met or exceeded</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>Learning Outcomes achieved</td>
+					<td>3</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th>Total</th>
+					<td>12</td>
+				</tr>
+			</tfoot>
+		</table>
+	</section>
+
+	<script src="../template/bundle.js" defer></script>
+</body>
+</html>
